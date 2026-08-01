@@ -72,4 +72,136 @@
 #include <iomanip>
 #include <cmath>
 using namespace std;
+double add(double a, double b) {
+    return a + b;
+}
 
+double subtract(double a, double b) {
+    return a - b;
+}
+
+double multiply(double a, double b) {
+    return a * b;
+}
+
+bool divide(double a, double b, double &result) {
+    if (b == 0) {
+        return false;
+    }
+    result = a / b;
+    return true;
+}
+
+bool modulus(double a, double b, double &result) {
+    if (b == 0) {
+        return false;
+    }
+    result = fmod(a, b);
+    return true;
+}
+
+double power(double base, double exponent) {
+    return pow(base, exponent);
+}
+
+void printMenu() {
+    cout << "============================\n";
+    cout << "     SIMPLE CALCULATOR\n";
+    cout << "============================\n";
+    cout << "1. Addition\n";
+    cout << "2. Subtraction\n";
+    cout << "3. Multiplication\n";
+    cout << "4. Division\n";
+    cout << "5. Modulus\n";
+    cout << "6. Exponentiation\n";
+    cout << "7. Quit\n";
+}
+
+int main() {
+    cout << fixed << setprecision(2);
+
+    while (true) {
+        printMenu();
+        cout << "Select an operation (1-7): ";
+
+        int choice;
+        if (!(cin >> choice)) {
+            // clear bad input state
+            cin.clear();
+            cin.ignore(10000, '\n');
+            cout << "Invalid input. Please enter a number.\n\n";
+            continue;
+        }
+
+        if (choice == 7) {
+            cout << "Goodbye!\n";
+            break;
+        }
+
+        if (choice < 1 || choice > 7) {
+            cout << "Invalid choice. Please select a number between 1 and 7.\n\n";
+            continue;
+        }
+
+        double a, b;
+        cout << "Enter first number : ";
+        if (!(cin >> a)) {
+            cin.clear();
+            cin.ignore(10000, '\n');
+            cout << "Invalid number entered.\n\n";
+            continue;
+        }
+
+        cout << "Enter second number: ";
+        if (!(cin >> b)) {
+            cin.clear();
+            cin.ignore(10000, '\n');
+            cout << "Invalid number entered.\n\n";
+            continue;
+        }
+
+        double result = 0;
+        bool success = true;
+        char opSymbol = '?';
+
+        switch (choice) {
+            case 1:
+                result = add(a, b);
+                opSymbol = '+';
+                break;
+            case 2:
+                result = subtract(a, b);
+                opSymbol = '-';
+                break;
+            case 3:
+                result = multiply(a, b);
+                opSymbol = '*';
+                break;
+            case 4:
+                success = divide(a, b, result);
+                opSymbol = '/';
+                if (!success) {
+                    cout << "Error: Cannot divide by zero.\n\n";
+                }
+                break;
+            case 5:
+                success = modulus(a, b, result);
+                opSymbol = '%';
+                if (!success) {
+                    cout << "Error: Cannot divide by zero.\n\n";
+                }
+                break;
+            case 6:
+                result = power(a, b);
+                opSymbol = '^';
+                break;
+        }
+
+        if (success) {
+            cout << "Result: " << a << " " << opSymbol << " " << b
+                 << " = " << result << "\n\n";
+        }
+    }
+
+    return 0;
+}
