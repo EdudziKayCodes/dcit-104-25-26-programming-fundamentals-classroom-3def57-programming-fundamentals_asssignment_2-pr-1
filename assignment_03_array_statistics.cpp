@@ -109,7 +109,6 @@ int main()
         cout << "Enter number " << i + 1 << ": ";
         cin >> numbers[i];
     }
-
     cout << "\nResults:" << endl;
     cout << "Sum:     " << calculateSum(numbers, n) << endl;
     cout << "Average: " << calculateAverage(numbers, n) << endl;
